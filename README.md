@@ -88,3 +88,31 @@ cargo tarpaulin -o Xml
 cargo tarpaulin -o Html
 cargo tarpaulin -o Lcov
 ```
+
+
+### Gitlab
+
+How to add code coverage calculating to gitlab pipeline, since tests must be ran during code coverage analysis, this stage in pipeline can be merged with test stage, to your `.gitlab-ci.yml` add following:
+```yml
+code-coverage-and-tests:
+  stage: prepare
+  tags:
+    - docker-executor
+  image: rust
+  before_script:
+    - cargo install cargo-tarpaulin
+  script:
+    - cargo tarpaulin
+  coverage: '/^\d+.\d+% coverage/'
+  allow_failure: false
+```
+
+Contents:
+- `code-coverage-and-tests` is name of the job, it can be named anything you want, 
+- `stage` is name of stage in which job belongs
+- `tags` is tag of runner
+- `image` is name of docker image which is used to run job, this can be changed, but image either has to have cargo and rust installed or you have to install it in `before_script`
+- `before_script` what commands to run before `script` since cargo is installed in `rust` image, we only have to install `cargo-tarpaulin`
+- `script` is script to run, we only need to run `cargo tarpaulin`, if you want to save output as json or html, this should be changed
+- `coverage` here we pass regex, that should detect coverage this is specific for tarpaulin and would you can see what should be used for different tools [here](https://docs.gitlab.com/ee/ci/testing/code_coverage.html)
+- `allow_failure` allow for `script` to fail
