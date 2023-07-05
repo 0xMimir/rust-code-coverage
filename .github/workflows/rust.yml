@@ -20,17 +20,18 @@ jobs:
         run: cargo clippy -- -D warnings
 
   code-coverage-and-tests:
-    runs-on: ubuntu-latest
+    name:                       coverage
+    runs-on:                    ubuntu-latest
+    container:
+      image:                    xd009642/tarpaulin
+      options:                  --security-opt seccomp=unconfined
     steps:
-      - uses: actions/checkout@v3
-      - uses: Swatinem/rust-cache@v2
+      - name:                   Checkout repository
+        uses:                   actions/checkout@v2
 
-      - name: Run cargo-tarpaulin
-        uses: actions-rs/tarpaulin@v0.1
-        env:
-          ETHPLORER_API_KEY: ${{ secrets.ETHPLORER_API_KEY }}
-          MESSARIIO_KEY: ${{ secrets.MESSARIIO_KEY }}
-        run: cargo tarpaulin
+      - name:                   Generate code coverage
+        run: |
+          cargo tarpaulin --out Xml
 
   build:
     runs-on: ubuntu-latest
