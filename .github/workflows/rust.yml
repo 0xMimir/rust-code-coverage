@@ -30,6 +30,7 @@ jobs:
         env:
           ETHPLORER_API_KEY: ${{ secrets.ETHPLORER_API_KEY }}
           MESSARIIO_KEY: ${{ secrets.MESSARIIO_KEY }}
+        run: cargo tarpaulin
 
   build:
     runs-on: ubuntu-latest
