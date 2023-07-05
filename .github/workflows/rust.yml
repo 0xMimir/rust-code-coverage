@@ -14,12 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install latest nightly
-        uses: actions-rs/toolchain@v1
-        with:
-          override: true
-          components: rustfmt, clippy
-
       - uses: Swatinem/rust-cache@v2
 
       - name: Clippy
@@ -29,12 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install latest nightly
-        uses: actions-rs/toolchain@v1
-        with:
-          override: true
-          components: rustfmt, clippy
-
       - uses: Swatinem/rust-cache@v2
 
       - name: Run cargo-tarpaulin
@@ -48,12 +36,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install latest nightly
-        uses: actions-rs/toolchain@v1
-        with:
-          override: true
-          components: rustfmt, clippy
-
       - uses: Swatinem/rust-cache@v2
 
       - name: Build
