@@ -1,0 +1,10 @@
+[subtract_test]
+skip-clean=true
+args = ["--ignored", "divide_test"]
+
+[divide_test]
+skip-clean=true
+args = ["--ignored", "subtract_test"]
+
+[test]
+skip-clean=true
